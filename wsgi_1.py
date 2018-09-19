@@ -14,18 +14,34 @@ body = """<html>
 </body>
 </html>"""
 
+today = datetime.date.today()
+month = {
+    1: 'January',
+    2: 'February',
+    3: 'March',
+    4: 'April',
+    5: 'May',
+    6: 'June',
+    7: 'July',
+    8: 'August',
+    9: 'September',
+    10: 'October',
+    11: 'November',
+    12: 'December'
+}
+
+
 
 def application(environ, start_response):
     import pprint
     pprint.pprint(environ)
-
     response_body = body.format(
         software=environ.get('SERVER_SOFTWARE', default),
-        path="aaaa",
-        month="bbbb",
-        date="cccc",
-        year="dddd",
-        client_ip="eeee"
+        path=environ.get('PATH_INFO', default),
+        month=month[today.month],
+        date=today.day,
+        year=today.year,
+        client_ip=environ.get('REMOTE_ADDR', default)
     )
     status = '200 OK'
 
